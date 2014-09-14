@@ -27,6 +27,7 @@
                 })
                 $('#message').val('');
                 validateInput();
+                setTimeout(function(){ $('#errorPanel').empty(); },4000);
             });
 
 //            $('a').click(function(){
@@ -68,7 +69,7 @@
                 <input type="text" id='lastname' name="lastname" onkeyup="validateInput()" placeholder="Enter last name"/><br/>
                 <input type="text" id='username' name="username" onkeyup="validateInput()" placeholder="Enter username"/>
                 <br/>
-                <input type="text" id='password' name="password" onkeyup="validateInput()" placeholder="Enter password"/>
+                <input type="password" id='password' name="password" onkeyup="validateInput()" placeholder="Enter password"/>
                 <br/>
                 <select name="userType" id="userType" onchange="validateInput()">
                     <option value="admin">Admin</option>

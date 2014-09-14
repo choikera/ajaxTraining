@@ -27,6 +27,7 @@
                 })
                 $('#message').val('');
                 validateInput();
+                setTimeout(function(){ $('#errorPanel').empty(); },4000);
             });
 
 //            $('a').click(function(){
@@ -50,7 +51,6 @@
             else
                 document.getElementById('submit').disabled = false;
         }
-
 
         function sleep(seconds)
         {
@@ -79,6 +79,7 @@
             </thead>
             <tbody id="tableBody">
                 @foreach($msg as $msgs)
+
                     <tr>
                         <td>{{{ $msgs->msg }}}</td>
                         <td>{{{ $msgs->firstname }}} {{{ $msgs->lastname }}}</td>

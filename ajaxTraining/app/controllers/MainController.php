@@ -64,14 +64,14 @@ class MainController extends BaseController {
         if($checkUname != 0)
         {
             $response = array(
-                'msg' => '<h4 id="errorPanel"><font color="red">User already exists!</font></h4>'
+                'msg' => '<h4 id="errorPanel"><font color="red">Username already exists!</font></h4>'
             );
         }
         else
         {
             $userData = array(
                 'username' => Input::get('username'),
-                'password' => Input::get('password'),
+                'password' => Hash::make(Input::get('password')),
                 'type' => Input::get('userType'),
                 'firstname' => Input::get('firstname'),
                 'lastname' => Input::get('lastname')
