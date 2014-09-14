@@ -3,7 +3,7 @@
     <script src="js/jquery-1.11.0.min.js"></script>
     <style>
         td, th {
-            width: 33%;
+            width: 25%;
         }
         table {
             /*border-style: solid;*/
@@ -45,7 +45,7 @@
 
         function validateInput()
         {
-            if(document.getElementById('message').value.length == 0)
+            if(document.getElementById('password').value.length == 0 || document.getElementById('username').value.length == 0 || document.getElementById('userType').value == ''|| document.getElementById('firstname').value.length == 0 || document.getElementById('lastname').value.length == 0 )
                 document.getElementById('submit').disabled = true;
             else
                 document.getElementById('submit').disabled = false;
@@ -61,28 +61,43 @@
 </head>
 <body>
     <center>
-        <h2 style="padding: 1em;">Add a message | <a href="logout">Logout</a> | <a href="addUser">Add another user</a></h2>
+        <h2 style="padding: 1em;"> <a href="home">Add a message</a> | <a href="logout">Logout</a> | Add another user</h2>
         <div>
-            <form action="home/enterMessage" method="POST" name="ajaxForm" id="ajaxForm">
-                <input type="text" id='message' name="message" onkeyup="validateInput()" placeholder="Enter message here"/>
+            <form action="home/newUser" method="POST" name="ajaxForm" id="ajaxForm">
+                <input type="text" id='firstname' name="firstname" onkeyup="validateInput()" placeholder="Enter first name"/><br/>
+                <input type="text" id='lastname' name="lastname" onkeyup="validateInput()" placeholder="Enter last name"/><br/>
+                <input type="text" id='username' name="username" onkeyup="validateInput()" placeholder="Enter username"/>
+                <br/>
+                <input type="text" id='password' name="password" onkeyup="validateInput()" placeholder="Enter password"/>
+                <br/>
+                <select name="userType" id="userType" onchange="validateInput()">
+                    <option value="admin">Admin</option>
+                    <option value="poster">Poster</option>
+                </select>
             </form>
-            <button id="submit" name="submit" disabled>Submit message</button>
+            <button id="submit" name="submit" disabled>Create User</button>
         </div>
         <div style="position: absolute; z-index: -1; width: 100%;">
             <h4 id="errorPanel"><font></font></h4>
         </div>
         <table border="2" style="margin-top: 5em;">
             <thead>
-                <th>Message</th>
-                <th>Posted By</th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Account Type</th>
                 <th>Action</th>
             </thead>
             <tbody id="tableBody">
-                @foreach($msg as $msgs)
+                @foreach($users as $user)
                     <tr>
-                        <td>{{{ $msgs->msg }}}</td>
-                        <td>{{{ $msgs->firstname }}} {{{ $msgs->lastname }}}</td>
-                        <td><form action="deleteMessage/{{$msgs->mid}}" method="POST" id="deleteForm_{{ $msgs->mid }}"><a href="#" id="deleteItem" name="deleteForm_{{ $msgs->mid }}">Delete!</a></form></td>
+                        <td>{{{ $user->username }}}</td>
+                        <td>{{{ $user->firstname }}} {{{ $user->lastname }}}</td>
+                        <td>{{{ $user->type }}}</td>
+                        <td>
+                            <form method="POST" action="deleteUser_{{$user->id}}" id="deleteUser_{{$user->id}}">
+                                <a href="#" name="deleteUser_{{$user->id}}">Delete</a>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
